@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns : th="www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Cars</title>
+
+</head>
+<body>
+
+<ol>
+<li th:each="c:${carList}" th:text="${c}"></li>
+</ol>
+
+<a href="/cars/open-save-page">Yeni mashin qeydiyyat et</a>
+
+</body>
+</html>

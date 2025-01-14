@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns : th="www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Cars</title>
+<style></style>
+</head>
+<body>
+<form method="post" th:action="@{/cars/save}" th:object="${cars}">
+<label>Brand</label> <input th:field="*{brand}"><br>
+<label>Model</label><input  th:field="*{model}"><br>
+<input type="submit" value="Yadda saxla">
+</form>
+
+</body>
+</html>
