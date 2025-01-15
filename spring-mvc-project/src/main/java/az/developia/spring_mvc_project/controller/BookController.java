@@ -23,9 +23,10 @@ public class BookController {
 	private BookService bookService;
 	
 	@GetMapping
-	public String showBoook(Model model) {
+	public String showBoook(Model model,
+			@RequestParam(name="q", required=false, defaultValue =" ") String b){
 		
-		model.addAttribute("books", bookService.findAll());
+		model.addAttribute("books", bookService.findAll(b));
 	
 		return "books";
 	}

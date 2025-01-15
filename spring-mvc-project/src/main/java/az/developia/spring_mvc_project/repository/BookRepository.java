@@ -19,14 +19,14 @@ public class BookRepository {
 	@Autowired
 	private DataSource ds;
 	
-	public List<Book> findAll(){
+	public List<Book> findAll(String b){
 		List<Book> books =new ArrayList<>();
 		
 		try {
 			
 			Connection conn=ds.getConnection();
 			Statement st=conn.createStatement();
-			ResultSet result=st.executeQuery("select * from books");
+			ResultSet result=st.executeQuery("select * from books where name like '%"+b+"%'");
 			while(result.next()) {
 				Book book=new Book();
 				book.setName(result.getString("name"));
