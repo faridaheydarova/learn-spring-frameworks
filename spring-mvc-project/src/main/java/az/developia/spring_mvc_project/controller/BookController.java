@@ -22,9 +22,19 @@ public class BookController {
 	@Autowired
 	private BookService bookService;
 	
-	@GetMapping
+	
+/*	@GetMapping
 	public String showBoook(Model model,
 			@RequestParam(name="q", required=false, defaultValue =" ") String b){
+		
+		model.addAttribute("books", bookService.findAll(b));
+	
+		return "books";
+	}
+*/
+
+	@GetMapping
+	public String showBoook(Model model, String b){
 		
 		model.addAttribute("books", bookService.findAll(b));
 	
@@ -40,8 +50,9 @@ Book book=new Book();
 
 	@PostMapping(path="/save")
 	public String saveBook(@ModelAttribute(name="books") Book bookInfo) {
-		System.out.println(bookInfo);
-		return "redirect:/home";
+Integer id=	bookService.add(bookInfo);
+System.out.println(id);
+		return "redirect:/book";
 		
 
 }

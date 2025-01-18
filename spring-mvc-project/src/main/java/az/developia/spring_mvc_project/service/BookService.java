@@ -19,6 +19,16 @@ public class BookService {
 		return bookRepo.findAll(b);
 	}
 
+
+	public Integer add(Book bookInfo) {
+		Integer id = 0;
+		id=bookRepo.add(bookInfo);
+		return id;
+		
+	}
+	
+
+
 	}
 
 
