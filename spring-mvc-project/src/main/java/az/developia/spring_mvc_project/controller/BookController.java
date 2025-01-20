@@ -16,34 +16,34 @@ import az.developia.spring_mvc_project.model.Book;
 import az.developia.spring_mvc_project.service.BookService;
 
 @Controller
+
+// /book/save
 @RequestMapping(path="/book")
 public class BookController {
 	
 	@Autowired
 	private BookService bookService;
 	
-	
-/*	@GetMapping
-	public String showBoook(Model model,
-			@RequestParam(name="q", required=false, defaultValue =" ") String b){
-		
-		model.addAttribute("books", bookService.findAll(b));
-	
-		return "books";
-	}
-*/
 
-	@GetMapping
-	public String showBoook(Model model, String b){
+	
+	//localhost:8183/book/book-list
+	
+//localhost:8183/book/open-save-page
+	
+//mvc - model view controller
+	@GetMapping(path="/book-list")
+	
+	
+	public String showBoook(Model model){
 		
-		model.addAttribute("books", bookService.findAll(b));
+		model.addAttribute("books", bookService.findAll());
 	
 		return "books";
 	}
 	
 	@GetMapping(path="/open-save-page")
 	public String showSaveBook(Model model ) {
-Book book=new Book();
+		Book book=new Book();
 		model.addAttribute("books", book);
 		return "save-book";
 	}
@@ -52,8 +52,7 @@ Book book=new Book();
 	public String saveBook(@ModelAttribute(name="books") Book bookInfo) {
 Integer id=	bookService.add(bookInfo);
 System.out.println(id);
-		return "redirect:/book";
-		
+		return "redirect:/home";
 
 }
 }
