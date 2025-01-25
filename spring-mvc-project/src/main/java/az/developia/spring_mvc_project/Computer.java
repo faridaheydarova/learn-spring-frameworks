@@ -4,6 +4,8 @@ public class Computer {
 	
 	private String brand;
 	private Long price;
+	
+	 //mysql - computer - table- - brand price 5 computer adi ve qiymeti elave edin
 	public String getBrand() {
 		return brand;
 	}
