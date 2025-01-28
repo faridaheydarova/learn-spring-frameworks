@@ -25,6 +25,15 @@ public class ComputerService {
 		return id;
 	}
 
+
+	public void deleteById(Integer id) {
+		compRepository.deleteById(id);
+		
+	}
+
+
+
+
 	
 }
 

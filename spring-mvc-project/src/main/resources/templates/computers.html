@@ -15,6 +15,7 @@ table{border:2px solid black;}</style>
   <table class="table table-striped">
     <thead>
       <tr>
+      <th>ID</th>
        <th>Computers-brand</th>
 <th>Computer-price</th>
       </tr>
@@ -22,11 +23,17 @@ table{border:2px solid black;}</style>
     <tbody>
      
 <tr th:each="c: ${computers}">
+<td th:text="${c.id}"></td>
 <td th:text="${c.brand}"></td>
 <td th:text="${c.price}"></td>
+
+<td><a th:href="@{/computers/delete/{id}(id=${c.id})}">Sil</a></td>
+
+
     </tbody>
   </table>
 </div>
-
+ <br>
+ <a href="/computers/open-save-page">Yeni komputer qeydiyyat et</a>
 </body>
 </html>

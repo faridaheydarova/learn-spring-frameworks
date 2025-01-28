@@ -1,7 +1,7 @@
 package az.developia.spring_mvc_project;
 
 public class Computer {
-	
+	private int id;
 	private String brand;
 	private Long price;
 	
@@ -17,8 +17,17 @@ public class Computer {
 	}
 	public void setPrice(Long price) {
 		this.price = price;
+		
 	}
 	
+	
+	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	@Override
 	public String toString() {
 		return "Computer [brand=" + brand + ", price=" + price + "]";

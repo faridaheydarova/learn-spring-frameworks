@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -40,5 +41,14 @@ System.out.println(id);
 		return "redirect:/home";
 
 	}
+	
+
+	@GetMapping(path="/delete/{id}")
+	public String delete(@PathVariable Integer id) {
+ computerService.deleteById(id);
+ return "redirect:/computers";
+
+	}
+
 
 }
