@@ -19,6 +19,12 @@ public class ComputerService {
 		return compRepository.findAll() ;
 	}
 
+
+	public Integer add(Computer c) {
+		Integer id = compRepository.add(c);
+		return id;
+	}
+
 	
 }
 
