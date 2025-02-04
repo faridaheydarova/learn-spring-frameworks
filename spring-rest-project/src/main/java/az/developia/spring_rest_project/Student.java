@@ -17,6 +17,14 @@ public class Student {
 	public void setAge(int age) {
 		this.age = age;
 	}
+	public Student(String name) {
+		super();
+		this.name = name;
+	
+	}
 	
 	
+	public Student() {
+		
+	}
 }
