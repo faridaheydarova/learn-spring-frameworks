@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,6 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(path="students")
 public class StudentRestController {
 	
+	@Autowired
+	private StudentRepository studentRepo;
+	
 	@GetMapping(path="/studentInfo")
 	public Student studentInfo() {
 		Student student=new Student();
@@ -20,8 +25,13 @@ public class StudentRestController {
 		student.setAge(13);
 		return student;
 	}
-	
-	
+@GetMapping(path="save")
+public List<Student> save(){
+	Student s=new Student("Farida",27);
+	studentRepo.save(s);
+
+	return studentRepo.findAll();
+}
 
 //localhost:9595/students/studentInfo
 	
@@ -43,7 +53,7 @@ public class StudentRestController {
 		return studentList;
 	}
 	
-	@GetMapping(path="/search")
+	/*@GetMapping(path="/search")
 	public List<Student> search (
 @RequestParam(name="sorgu", required =false, defaultValue="Name") String sorgu){
 	
@@ -54,7 +64,7 @@ List<Student>studentList=List.of(
 
 List<Student> studentsFiltered=studentList.stream().filter(ss->ss.getName().contains(sorgu)).collect(Collectors.toList());
 return studentsFiltered;
-	}
+	}*/
 }
 	
 

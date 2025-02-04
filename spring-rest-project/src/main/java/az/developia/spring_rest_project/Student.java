@@ -1,7 +1,17 @@
 package az.developia.spring_rest_project;
 
-public class Student {
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
+@Entity
+@Table(name="students")
+public class Student {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 	private String name;
 	private int age;
 	
@@ -17,9 +27,10 @@ public class Student {
 	public void setAge(int age) {
 		this.age = age;
 	}
-	public Student(String name) {
+	public Student(String name, int age) {
 		super();
 		this.name = name;
+		this.age=age;
 	
 	}
 	
