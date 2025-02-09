@@ -1,10 +1,13 @@
 package az.developia.spring_rest_project;
 
 import java.util.ArrayList;
+
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,11 +29,26 @@ public class StudentRestController {
 		return student;
 	}
 @GetMapping(path="save")
-public List<Student> save(){
-	Student s=new Student("Farida",27);
-	studentRepo.save(s);
 
-	return studentRepo.findAll();
+public Student saveStudent(){
+	
+	Student s=new Student("Farida",27);
+	
+	studentRepo.save(s);
+	Long id=100L;
+
+	Optional<Student>result=studentRepo.findById(id);
+	if(result.isPresent()) {
+		return result.get();
+	}else {
+		throw new RuntimeException(id+" nomreli melumat tapilmadi");
+	}
+
+
+}
+@ExceptionHandler
+public String handleException(RuntimeException exc) {
+	return exc.getMessage();
 }
 
 //localhost:9595/students/studentInfo
