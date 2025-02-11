@@ -1,4 +1,4 @@
-package az.developia.spring_rest_project;
+package az.developia.spring_rest_project.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -8,6 +8,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name="students")
+
 public class Student {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,6 +28,8 @@ public class Student {
 	public void setAge(int age) {
 		this.age = age;
 	}
+
+
 	public Student(String name, int age) {
 		super();
 		this.name = name;
