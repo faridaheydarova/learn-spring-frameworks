@@ -2,6 +2,8 @@ package az.developia.spring_rest_project.controller;
 
 
 import az.developia.spring_rest_project.dto.StudentAddRequestDTO;
+import az.developia.spring_rest_project.dto.StudentListResponseDTO;
+import az.developia.spring_rest_project.dto.StudentResponseDTO;
 import az.developia.spring_rest_project.dto.StudentUpdateRequestDTO;
 import az.developia.spring_rest_project.exception.OurException;
 import az.developia.spring_rest_project.service.StudentService;
@@ -19,15 +21,15 @@ public class StudentRestController {
 
 	@Autowired 
 	private StudentService studentService;
-	
+
 	@PostMapping(path="/save")
 	public void add(@Valid @RequestBody StudentAddRequestDTO req, BindingResult br) {
 	if(br.hasErrors()) {
 			throw new OurException("melumatlari tam doldurun", null);
 		}
-		
+
 		studentService.add(req);
-		
+
 	}
 	
 	
@@ -43,7 +45,16 @@ public class StudentRestController {
 	public void delete(@PathVariable Long id) {
 	 studentService.deleteById(id);
 	}
-	
+
+	@GetMapping(path="/{id}")
+	public StudentResponseDTO findById(@PathVariable Long id){
+		return studentService.findById(id);
+	}
+
+	@GetMapping(path = "all")
+public StudentListResponseDTO findAll(){
+		return studentService.findAll();
+}
 	
 }
 	
