@@ -16,4 +16,5 @@ public interface StudentService {
 	StudentResponseDTO findById(Long id);
 
 	StudentListResponseDTO findAll();
+	StudentListResponseDTO findAllPagination(Integer begin, Integer length);
 }

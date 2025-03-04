@@ -11,6 +11,7 @@ import jakarta.validation.Valid;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
  
@@ -23,10 +24,8 @@ public class StudentRestController {
 	private StudentService studentService;
 
 	@PostMapping(path="/save")
-	public void add(@Valid @RequestBody StudentAddRequestDTO req, BindingResult br) {
-	if(br.hasErrors()) {
-			throw new OurException("melumatlari tam doldurun", null);
-		}
+	@ResponseStatus(value=HttpStatus.ACCEPTED)
+	public void add( @RequestBody StudentAddRequestDTO req ) {
 
 		studentService.add(req);
 
@@ -42,6 +41,7 @@ public class StudentRestController {
 	}
 	
 	@DeleteMapping(path="/{id}")
+	@ResponseStatus(value=HttpStatus.OK)
 	public void delete(@PathVariable Long id) {
 	 studentService.deleteById(id);
 	}
@@ -55,6 +55,13 @@ public class StudentRestController {
 public StudentListResponseDTO findAll(){
 		return studentService.findAll();
 }
+	//localhost:8081/students/pagination/begin/4/length/2
+	@GetMapping(path = "pagination/begin/{begin}/length/{length}")
+public StudentListResponseDTO findAllPagination(@PathVariable Integer begin, @PathVariable Integer length){
+		return studentService.findAllPagination(begin, length);
+}
+
+	
 	
 }
 	

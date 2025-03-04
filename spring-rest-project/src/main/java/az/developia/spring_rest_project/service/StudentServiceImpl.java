@@ -29,9 +29,7 @@ public class StudentServiceImpl implements StudentService {
 	public void add(StudentAddRequestDTO req) {
 
 		Student student = new Student();
-		student.setName(req.getName());
-		student.setAge(req.getAge());
-		student.setPhone(req.getPhone());
+		mapper.map(req,student);
 
 
 		studentRepository.save(student);
@@ -69,6 +67,21 @@ public class StudentServiceImpl implements StudentService {
 	@Override
 	public StudentListResponseDTO findAll() {
 		List<Student> studentEntity = studentRepository.findAll();
+		StudentListResponseDTO dto =new StudentListResponseDTO();
+		List<StudentResponseEntityDTO> dtoEntities=new ArrayList<StudentResponseEntityDTO>();
+		for(Student s: studentEntity){
+			StudentResponseEntityDTO dtoo=new StudentResponseEntityDTO();
+			mapper.map(s,dtoo);
+			dtoEntities.add(dtoo);
+		}
+		dto.setStudents(dtoEntities);
+		return dto;
+	}
+
+	@Override
+	public StudentListResponseDTO findAllPagination(Integer begin, Integer length) {
+		
+		List<Student> studentEntity = studentRepository.findAllPagination(begin,length);
 		StudentListResponseDTO dto =new StudentListResponseDTO();
 		List<StudentResponseEntityDTO> dtoEntities=new ArrayList<StudentResponseEntityDTO>();
 		for(Student s: studentEntity){

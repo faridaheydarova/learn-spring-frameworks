@@ -12,4 +12,7 @@ public interface StudentRepository extends JpaRepository<Student, Long>{
 
 
     public List<Student>findAllByAge(int age);
+
+    @Query(value = "select*from students limit ?1,?2", nativeQuery = true)
+	public List<Student> findAllPagination(Integer begin, Integer length);
 }
