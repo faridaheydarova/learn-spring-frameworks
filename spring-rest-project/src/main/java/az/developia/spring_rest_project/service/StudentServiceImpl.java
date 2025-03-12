@@ -8,8 +8,10 @@ import org.modelmapper.ModelMapper;
 
 import org.springframework.stereotype.Service;
 
+import az.developia.spring_rest_project.entity.Authority;
 import az.developia.spring_rest_project.entity.Student;
 import az.developia.spring_rest_project.exception.OurException;
+import az.developia.spring_rest_project.repository.AuthoriyRepository;
 import az.developia.spring_rest_project.repository.StudentRepository;
 
 import java.sql.ClientInfoStatus;
@@ -23,6 +25,7 @@ public class StudentServiceImpl implements StudentService {
 
 	private final StudentRepository studentRepository;
 	private final ModelMapper mapper;
+	private final AuthoriyRepository repo;
 
 
 	@Override
@@ -31,7 +34,11 @@ public class StudentServiceImpl implements StudentService {
 		Student student = new Student();
 		mapper.map(req,student);
 
-
+		Authority authority=new Authority();
+		authority.setUsername(req.getName());
+		authority.setAuthority("STUDENT");
+		
+		repo.save(authority);
 		studentRepository.save(student);
 	}
 
