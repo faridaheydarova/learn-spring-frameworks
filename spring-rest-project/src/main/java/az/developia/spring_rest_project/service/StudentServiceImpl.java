@@ -2,16 +2,19 @@ package az.developia.spring_rest_project.service;
 
 
 import az.developia.spring_rest_project.dto.*;
+
 import lombok.RequiredArgsConstructor;
 
 import org.modelmapper.ModelMapper;
 
 import org.springframework.stereotype.Service;
 
-import az.developia.spring_rest_project.entity.Authority;
+import az.developia.spring_rest_project.entity.Authorities;
+import az.developia.spring_rest_project.entity.AuthorityListEntity;
 import az.developia.spring_rest_project.entity.Student;
 import az.developia.spring_rest_project.exception.OurException;
-import az.developia.spring_rest_project.repository.AuthoriyRepository;
+import az.developia.spring_rest_project.repository.AuthoriesRepository;
+
 import az.developia.spring_rest_project.repository.StudentRepository;
 
 import java.sql.ClientInfoStatus;
@@ -25,7 +28,7 @@ public class StudentServiceImpl implements StudentService {
 
 	private final StudentRepository studentRepository;
 	private final ModelMapper mapper;
-	private final AuthoriyRepository repo;
+	private final AuthoriesRepository repo;
 
 
 	@Override
@@ -34,7 +37,7 @@ public class StudentServiceImpl implements StudentService {
 		Student student = new Student();
 		mapper.map(req,student);
 
-		Authority authority=new Authority();
+		Authorities authority=new Authorities();
 		authority.setUsername(req.getName());
 		authority.setAuthority("STUDENT");
 		

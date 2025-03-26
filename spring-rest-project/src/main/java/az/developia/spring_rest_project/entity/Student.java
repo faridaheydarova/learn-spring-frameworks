@@ -23,9 +23,6 @@ public class Student {
 	private int age;
 	private String phone;
 	
-	@JoinColumn(name="manager_id")
-	@ManyToOne
-	private Manager manager;
 	
 
 	
