@@ -1,6 +1,7 @@
 package az.developia.spring_rest_project.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,7 +24,7 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping(path="/users")
 
-public class UserController {
+public class UserRestController {
 	
 	@Autowired
 	private UserService userService;
@@ -41,10 +42,14 @@ public class UserController {
 	}
 	
 	@GetMapping(path="/login")
-	public List<Authorities> login(){
-		String username=SecurityContextHolder.getContext().getAuthentication().getName();
-		return authRepo.findAllByUsername(username);
+	public List<String> login() {
+	    String username = SecurityContextHolder.getContext().getAuthentication().getName();
+	    return authRepo.findAllByUsername(username)
+	                   .stream()
+	                   .map(Authorities::getAuthority)
+	                   .collect(Collectors.toList());
 	}
+
 	
 	
 }

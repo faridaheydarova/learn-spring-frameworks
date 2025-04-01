@@ -5,6 +5,7 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
@@ -50,18 +51,20 @@ public AuthenticationProvider authenticationProvider() {
 	authProvider.setUserDetailsService(userDetailService());
 	return authProvider;
 }
-	
-	@Bean
-	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-	http
-	.csrf(csrf-> csrf.disable())
-	.authorizeHttpRequests(auth-> auth
-			.requestMatchers("/users/**").permitAll()
-			.anyRequest().authenticated()
-			)
-	.formLogin(form -> form.disable())
-	.httpBasic(httpBasic -> httpBasic.disable());	
-	return http.build();
-		
-	}
+@Bean
+public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    http
+        .csrf(csrf -> csrf.disable())
+        .authorizeHttpRequests(auth -> auth
+        	.requestMatchers(HttpMethod.POST, "/users/**").permitAll()
+        	.requestMatchers(HttpMethod.GET, "/users/**").permitAll()
+            .requestMatchers(HttpMethod.POST, "/files/**").hasRole("UPLOAD_FILE")
+            .requestMatchers(HttpMethod.GET, "/files/**").hasRole("DOWNLOAD_FILE")
+            
+        )
+        .formLogin(Customizer.withDefaults()) 
+        .httpBasic(Customizer.withDefaults()); 
+    return http.build();
+}
+
 }

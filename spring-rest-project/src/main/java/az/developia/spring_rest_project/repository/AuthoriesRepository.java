@@ -9,7 +9,9 @@ import az.developia.spring_rest_project.entity.Authorities;
 
 public interface AuthoriesRepository  extends JpaRepository<Authorities, Long>{
 
-	List<Authorities> findAllByUsername(String username);
+
 	
+    List<Authorities> findAllByUsername(String username);
+
 
 }
