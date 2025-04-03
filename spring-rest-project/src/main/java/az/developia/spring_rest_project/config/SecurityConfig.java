@@ -14,6 +14,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -55,15 +56,19 @@ public AuthenticationProvider authenticationProvider() {
 public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     http
         .csrf(csrf -> csrf.disable())
+        .sessionManagement(session -> session
+           
+        	.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+        )
         .authorizeHttpRequests(auth -> auth
-        	.requestMatchers(HttpMethod.POST, "/users/**").permitAll()
-        	.requestMatchers(HttpMethod.GET, "/users/**").permitAll()
+            .requestMatchers(HttpMethod.POST, "/users/**").permitAll()
+            .requestMatchers(HttpMethod.GET, "/users/**").permitAll()
             .requestMatchers(HttpMethod.POST, "/files/**").hasRole("UPLOAD_FILE")
             .requestMatchers(HttpMethod.GET, "/files/**").hasRole("DOWNLOAD_FILE")
-            
         )
-        .formLogin(Customizer.withDefaults()) 
-        .httpBasic(Customizer.withDefaults()); 
+        .formLogin(Customizer.withDefaults())
+        .httpBasic(Customizer.withDefaults());
+
     return http.build();
 }
 
