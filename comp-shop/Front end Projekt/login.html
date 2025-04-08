@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Computer Shop Log in</title>
+    <link rel="stylesheet" href="./login.css">
+</head>
+<body>
+    <button class="bt1" onclick="goBack()">Əsas səhifə</button>
+    <div class="login-container">
+        <h2>Hesaba daxil olmaq</h2>
+        <form id="loginForm">
+          <input type="text" placeholder="İstifadəçi adı" id="email" minlength="2" required>
+          <input type="password" placeholder="Şifrə" id="password" >
+         <input type="submit" value="Hesaba daxil ol">
+        </form>
+        <div class="separator"></div>
+        <p>
+          Hesabın yoxdur? <a href="./Register.html">Hesab yarat</a>
+        </p>
+    </div>
+</body>
+<script src="login.js"></script>
+</html>
