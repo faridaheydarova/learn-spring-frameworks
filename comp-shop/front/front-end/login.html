@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Computer Shop Log in</title>
+    <link rel="stylesheet" href="./login.css">
+</head>
+<body>
+    <button class="bt1" onclick="goBack()">Əsas səhifə</button>
+    <div class="login-container">
+        <h2>Hesaba daxil olmaq</h2>
+        <form>
+          <input type="text" placeholder="İstifadəçi adı" id="username" minlength="2" required>
+          <input type="password" placeholder="Şifrə" id="password" minlength="2" maxlength="62" required>
+          <button type="button" onclick="loginUser()">Hesaba daxil ol</button>
+        </form>
+        <div class="separator"></div>
+        <p>
+
+      
+          <button type="button" onclick="goRegister()">Hesab yarat</button>
+        </p>
+    </div>
+</body>
+<script src="login.js"></script>
+</html>

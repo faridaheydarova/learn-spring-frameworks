@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kompüter Siyahısı və Axtarış Sistemi</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  
+    <link rel="stylesheet" href="komputerler.css">
+   
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <hr>
+    <a href="./index.html">
+        <button type="button" class="btn btn-warning">Əsas səhifə</button>
+    </a>
+    <hr>
+    <main>
+        <div class="kateqoriya">
+            <input class="search" placeholder="Kateqoriya və ya kompüter adı üzrə axtarış" id="search" type="search">
+            <ul>
+                <li>Acer</li>
+                <li>HP</li>
+                <li>Asus</li>
+                <li>Dell</li>
+                <li>Lenovo</li>
+                <li>LG</li>
+                <li>Casper</li>
+                <li>Fujitsu</li>
+                <li>Nexus</li>
+                <li>Samsung</li>
+                <li>Toshiba</li>
+                <li>Sony</li>
+            </ul>
+        </div>
+        <div class="komputerler" id="computerList">
+            
+        </div>
+    </main>
+
+  
+    <div class="popup" id="popup" style="display: none;">
+        <div class="popup-content" id="popup-content">
+            <button class="close-btn btn-close" aria-label="Popup-u bağla" onclick="closePopup()"></button>
+            <div id="computerDetails">
+                
+            </div>
+        </div>
+    </div>
+
+    <div id="searchContainer">
+        <input type="text" id="searchInput" placeholder="Kateqoriya və ya kompüter üzrə axtarış">
+    </div>
+
+    <div class="container">
+        <div class="grid-container" id="computerList"></div>
+    </div>
+
+
+<div id="modal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h4>Komputer haqqında ətraflı məlumat</h4>
+      <img id="modal-image" src="" alt="Windows" class="img-fluid rounded">
+
+      <p><strong>Marka:</strong> <span id="modal-marka"></span></p>
+      <p><strong>Model:</strong> <span id="modal-model"></span></p>
+      <p><strong>Təsvir:</strong> <span id="modal-tesvir"></span></p>
+      <p><strong>Qiymət:</strong> <span id="modal-qiymet"></span></p>
+      <p><strong>RAM:</strong> <span id="modal-ram"></span></p>
+      <p><strong>CPU:</strong> <span id="modal-cpu"></span></p>
+      <p><strong>Daimi yaddaş:</strong> <span id="modal-daimi"></span></p>
+    </div>
+  </div>
+  
+
+    <script>
+        async function fetchComputers() {
+      try {
+          const response = await fetch("http://localhost:8024/computers/findAll"); 
+          const computers = await response.json();
+  
+          const container = document.getElementById("computerList");
+  
+          if (!container) {
+              console.error("Xəta: computerList elementi tapılmadı!");
+              return;
+          }
+  
+          container.innerHTML = "";
+  
+          computers.forEach(computer => {
+              const card = document.createElement("div");
+              card.classList.add("card");
+  
+             
+              const photo = computer.photo || "default.jpg";
+              const brand = computer.brand || "Məlumat yoxdur";
+              const model = computer.model || "Məlumat yoxdur";
+              const description = computer.description || "Təsvir mövcud deyil";
+              const price = computer.price || "Qiymət mövcud deyil";
+              const ram = computer.ram || "Məlumat yoxdur";
+              const cpu = computer.cpu || "Məlumat yoxdur";
+              const storage = computer.storage || "Məlumat yoxdur";
+  
+              card.innerHTML = `
+                  <img src="${photo}" alt="Şəkil" class="img-fluid rounded">
+                  <p><b>Marka:</b> ${brand}</p>
+                  <p><b>Təsvir:</b> ${description}</p>
+                  <p><b>Qiymət:</b> ${price} AZN</p>
+                  <p><b>RAM:</b> ${ram}</p>
+                  <p><b>CPU:</b> ${cpu}</p>
+                  <p><b>Daimi yaddaş:</b> ${storage}</p>
+                  <button class="btn-custom" 
+      data-photo="${photo}"
+      data-brand="${brand}" 
+      data-model="${model}"
+      data-description="${description}"
+      data-price="${price}"
+      data-ram="${ram}"
+      data-cpu="${cpu}"
+      data-storage="${storage}">
+      Ətraflı
+  </button>
+  
+              `;
+  
+              container.appendChild(card);
+          });
+  
+         
+          document.querySelectorAll(".btn-custom").forEach(button => {
+              button.addEventListener("click", function () {
+                  openModal(this);
+              });
+          });
+  
+      } catch (error) {
+          console.error("Xəta baş verdi:", error);
+      }
+  }
+  
+  fetchComputers();
+  
+  
+  function openModal(button) {
+      document.getElementById("modal-marka").textContent = button.getAttribute("data-brand");
+      document.getElementById("modal-model").textContent = button.getAttribute("data-model");
+      document.getElementById("modal-tesvir").textContent = button.getAttribute("data-description");
+      document.getElementById("modal-qiymet").textContent = button.getAttribute("data-price");
+      document.getElementById("modal-ram").textContent = button.getAttribute("data-ram");
+      document.getElementById("modal-cpu").textContent = button.getAttribute("data-cpu");
+      document.getElementById("modal-daimi").textContent = button.getAttribute("data-storage");
+  
+      const imageUrl = button.getAttribute("data-photo") || "default.jpg"; 
+      document.getElementById("modal-image").src = imageUrl; 
+  
+      document.getElementById("modal").style.display = "block";
+  }
+  
+  
+  
+  document.querySelector(".close").addEventListener("click", function () {
+      document.getElementById("modal").style.display = "none";
+  });
+  
+  
+  window.addEventListener("click", function (event) {
+      if (event.target === document.getElementById("modal")) {
+          document.getElementById("modal").style.display = "none";
+      }
+  });
+  
+      </script>
+  
+</body>
+
+</html>
+
