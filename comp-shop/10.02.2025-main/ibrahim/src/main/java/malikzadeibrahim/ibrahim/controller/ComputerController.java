@@ -5,6 +5,7 @@ import malikzadeibrahim.ibrahim.entity.Computer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,12 +19,14 @@ public class ComputerController {
     private ComputerService computerService;
 
     @PostMapping("/add")
+
     public ResponseEntity<Computer> addComputer(@RequestBody Computer computer) {
         Computer createdComputer = computerService.addComputer(computer);
         return new ResponseEntity<>(createdComputer, HttpStatus.CREATED);
     }
 
     @GetMapping("/all")
+
     public ResponseEntity<List<Computer>> getAllComputers() {
         List<Computer> computers = computerService.getAllComputers();
         return new ResponseEntity<>(computers, HttpStatus.OK);

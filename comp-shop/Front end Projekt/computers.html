@@ -153,7 +153,7 @@ body {
     <script>
       async function fetchComputers() {
     try {
-        const response = await fetch("http://localhost:8024/computers/all"); 
+        const response = await fetch("http://localhost:8025/computers/all"); 
         const computers = await response.json();
 
         const container = document.getElementById("computerList");

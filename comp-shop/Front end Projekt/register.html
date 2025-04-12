@@ -7,8 +7,7 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
     body {
-        background: linear-gradient(135deg, #f0f9ff 0%, #cbebff 100%);
-
+      background: linear-gradient(135deg, #f0f9ff 0%, #cbebff 100%);
       font-family: 'Roboto', sans-serif;
       min-height: 100vh;
       margin: 0;
@@ -41,7 +40,6 @@
       border-color: #80bdff;
       box-shadow: 0 0 8px rgba(128, 189, 255, 0.5);
     }
-    /* Xəta vəziyyətində inputların qırmızı rəngini neytrala çeviririk */
     .form-control.is-invalid {
       border-color: #ced4da !important;
       box-shadow: none !important;
@@ -75,25 +73,22 @@
 <body>
   <div class="container">
     <h2 class="text-center mb-4">Hesab Yaratmaq</h2>
-    <form>
+    <form id="registerForm">
       <div class="mb-3">
         <label for="name" class="form-label">Ad:</label>
-        <input type="text" class="form-control is-invalid" id="name" required minlength="2" maxlength="30">
-      
+        <input type="text" class="form-control" id="name" required minlength="2" maxlength="30">
       </div>
       <div class="mb-3">
         <label for="phone" class="form-label">Telefon:</label>
-        <input type="text" class="form-control is-invalid" id="phone">
+        <input type="text" class="form-control" id="phone">
       </div>
       <div class="mb-3">
-        <label for="username" class="form-label">İstifadəçi adı:</label>
-        <input type="text" class="form-control is-invalid" id="username" required minlength="2" maxlength="30">
-        
+        <label for="email" class="form-label">Email:</label>
+        <input type="text" class="form-control" id="email" required minlength="2" maxlength="30">
       </div>
       <div class="mb-3">
         <label for="password" class="form-label">Şifrə:</label>
-        <input type="password" class="form-control is-invalid" id="password" required minlength="2" maxlength="30">
-     
+        <input type="password" class="form-control" id="password" required minlength="2" maxlength="30">
       </div>
       <button type="submit" class="btn btn-success w-100 mb-3">Hesab yarat</button>
       <div class="text-center">
@@ -101,34 +96,43 @@
         <a href="./index.html" class="btn btn-primary ms-2">Hesaba daxil ol</a>
       </div>
     </form>
+    <div id="registerMessage" class="text-center mt-3"></div>
   </div>
+
   <script>
-    document.querySelector('form').addEventListener('submit', async function (e) {
-      e.preventDefault(); 
-      const formData = {
-        name: document.getElementById('name').value,
-        phone: document.getElementById('phone').value,
-        username: document.getElementById('username').value,
-        password: document.getElementById('password').value
-      };
+    document.getElementById('registerForm').addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      const name = document.getElementById('name').value;
+      const phone = document.getElementById('phone').value;
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const messageBox = document.getElementById('registerMessage');
+
       try {
-        const response = await fetch("http://localhost:8024/users/save-seller", {
+        const response = await fetch('http://localhost:8025/auth/register', {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json;charset=UTF-8'
           },
-          body: JSON.stringify(formData),
+          body: JSON.stringify({ name, phone, email, password })
         });
+
+        const data = await response.json();
+
         if (response.ok) {
-          alert('Qeydiyyat uğurla tamamlandı!');
-          window.location.href = './login.html';
+          messageBox.textContent = "Qeydiyyat uğurla tamamlandı!";
+          messageBox.style.color = "green";
+          setTimeout(() => window.location.href = "login.html", 1500);
         } else {
-          const errorData = await response.json();
-          alert(`Xəta: ${errorData.message}`);
+          messageBox.textContent = data.message || "Xəta baş verdi!";
+          messageBox.style.color = "red";
         }
+
       } catch (error) {
-        console.error('Fetch error:', error);
-        alert('Server ilə əlaqə qurularkən xəta baş verdi.');
+        console.error("Şəbəkə xətası:", error);
+        messageBox.textContent = "Şəbəkə xətası baş verdi.";
+        messageBox.style.color = "red";
       }
     });
   </script>
