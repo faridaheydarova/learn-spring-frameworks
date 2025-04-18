@@ -19,6 +19,7 @@ public class ComputerController {
     private ComputerService computerService;
 
     @PostMapping("/add")
+    @PreAuthorize("hasRole('USER')")
 
     public ResponseEntity<Computer> addComputer(@RequestBody Computer computer) {
         Computer createdComputer = computerService.addComputer(computer);
