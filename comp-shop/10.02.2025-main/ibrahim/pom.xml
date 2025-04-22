@@ -10,6 +10,7 @@
 	<groupId>malikzadeibrahim</groupId>
 	<artifactId>ibrahim</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
 	<name>ibrahim</name>
 	<description>ibrahimapplication</description>
 	<properties>
@@ -73,7 +74,7 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
+<!--			<scope>test</scope>-->
 		</dependency>
 	</dependencies>
 
